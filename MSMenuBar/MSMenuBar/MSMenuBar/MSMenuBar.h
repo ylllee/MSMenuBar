@@ -6,13 +6,22 @@
 //  Copyright © 2016年 limingshan. All rights reserved.
 //
 
-#pragma mark ————————————————————————————————————————————————————————————
+/**
+ * 颜色rgb自定义
+ */
+#define kColorWith(r,g,b,al) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:al]
+
+//菜单栏高度
+#define kMenu_height 40
+//菜单栏选中后标题文本颜色
+#define kTitleSelectedColor kColorWith(51, 158, 210, 1)
+//菜单栏标题字体大小
+#define kMenuTitle_font 14
+
 
 #import <UIKit/UIKit.h>
 
-#import "MenuBarHeaderFiles.h"
-
-#import "MyTeamScrollView.h"
+#import "UIViewExt.h"
 
 @class MSMenuBar;
 
@@ -22,7 +31,7 @@
 
 @end
 
-@interface MSMenuBar : UIView<UIScrollViewDelegate,MyTeamScrollViewDelegate> {
+@interface MSMenuBar : UIView<UIScrollViewDelegate> {
     #pragma mark ========= 菜单栏的设置 =========
     //菜单栏标题label数组
     NSArray *_menuCellArray;
@@ -33,6 +42,8 @@
     //菜单栏左右遮罩视图
     UIImageView *_maskLeftImageView;
     UIImageView *_maskRightImageView;
+    //编辑按钮
+    UIButton *_menuEditButton;
     //菜单栏选中下划线
     UIView *_menuSelectedLine;
     //菜单栏索引位置
@@ -41,33 +52,18 @@
     CGFloat _scroll_max;
     //保存菜单栏所有menuCell的数组
     NSMutableArray *_allMenuCell;
-    #pragma mark ========= "我的分组"按钮的设置 =========
-    //遮罩视图
-    UIView *_superMaskView;
-    //遮罩视图上的分组视图
-    MyTeamScrollView *_myTeamView;
-    //给小三角添加点击事件
-    UIView *_triangleTapView;
     #pragma mark ========= 内容视图的设置 =========
     //内容视图的底部视图
     UIScrollView *_contentScrollView;
-    //“我的分组”公用的视图
-    UIView *_myTeamContentView;
 }
 
 @property (nonatomic, weak) id <MSMenuBarDelegate> delegate;
 
 #pragma mark ========= 菜单栏的设置 =========
-
 /**
- * 菜单栏标题数组
+ * 标题数组
  */
 @property (nonatomic, strong) NSArray *menuTitles;
-
-/**
- * “我的分组”标题数组
- */
-@property (nonatomic, strong) NSArray *myTeamTitles;
 
 /**
  * 菜单栏高度
@@ -124,37 +120,6 @@
  */
 @property (nonatomic, assign) BOOL isShowMaskViews;
 
-/**
- * 菜单栏遮罩视图设置
- */
-@property (nonatomic, strong) NSArray *maskImageNames;
-
-#pragma mark ========= "我的分组"按钮的设置 =========
-/**
- * 编辑按钮
- */
-@property (nonatomic, strong) UIButton *menuEditButton;
-/**
- * 创建一个小三角图片
- */
-@property (nonatomic, strong) UIImageView *iconImageView;
-/**
- * 我的分组按钮的y值
- */
-@property (nonatomic, assign) CGFloat myTeamButton_Y;
-/**
- * 我的分组按钮的背景颜色
- */
-@property (nonatomic, strong) UIColor *myTeamButtonBgColor;
-/**
- * 显示的个数
- */
-@property (nonatomic, assign) NSInteger visibleTitleCount;
-/**
- * 展示“我的分组”列表中数据所需要的子视图
- */
-@property (nonatomic, strong) UIView *myTeamDataDisplaySubView;
-
 #pragma mark ========= 内容视图的设置 =========
 /*
  *  内容视图数组
@@ -176,10 +141,12 @@
  */
 - (void)reloadMenuBarWithMenuTitles:(NSArray *)menuTitles contentViews:(NSArray *)contentViews;
 
-/*
- * 隐藏内容视图并且使菜单栏标题的文字颜色变为默认状态
- */
-- (void)hideContentViewsDefaultMenuTitles;
+
+
+
+
+
+
 
 
 
